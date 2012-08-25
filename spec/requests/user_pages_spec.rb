@@ -59,8 +59,6 @@ describe "User pages" do
 
   describe "profile page" do
 	let(:user) { FactoryGirl.create(:user) }
-	let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") }
-	let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "Bar") }
 
 	before do
 	  50.times { FactoryGirl.create(:micropost, user: user, content: "A and B and C") }
@@ -76,8 +74,8 @@ describe "User pages" do
 	  describe "pagination" do
 		it { should have_selector('div.pagination') }
 
-		it "should render the user's feed" do
-		  user.feed.paginate(page: 1).each do |item|
+		it "should render the user's microposts" do
+		  user.microposts.paginate(page: 1).each do |item|
 			page.should have_selector("li", text: item.content)
 		  end
 		end
